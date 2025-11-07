@@ -1,0 +1,29 @@
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 67232 entries, 0 to 67231
+Data columns (total 22 columns):
+ #   Column              Non-Null Count  Dtype         
+---  ------              --------------  -----         
+ 0   transaction_id      67232 non-null  object        
+ 1   price               67232 non-null  int64         
+ 2   date_transfer       67232 non-null  datetime64[ns]
+ 3   postcode            67018 non-null  object        
+ 4   property_type       67232 non-null  object        
+ 5   new_build           67232 non-null  object        
+ 6   duration            67232 non-null  object        
+ 7   paon                6755 non-null   object        
+ 8   saon                67232 non-null  object        
+ 9   street              62639 non-null  object        
+ 10  locality            35125 non-null  object        
+ 11  town_city           67232 non-null  object        
+ 12  district            67232 non-null  object        
+ 13  county              67232 non-null  object        
+ 14  ppd_category        67232 non-null  object        
+ 15  record_status       67232 non-null  object        
+ 16  property_type_desc  67232 non-null  object        
+ 17  year                67232 non-null  int32         
+ 18  month               67232 non-null  int32         
+ 19  quarter             67232 non-null  int32         
+ 20  year_month          67232 non-null  period[M]     
+ 21  postcode_sector     67018 non-null  object        
+dtypes: datetime64[ns](1), int32(3), int64(1), object(16), period[M](1)
+memory usage: 10.5+ MB
