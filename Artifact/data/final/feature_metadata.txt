@@ -1,0 +1,42 @@
+FEATURE ENGINEERING METADATA
+============================================================
+
+Created: 2025-11-09 15:09:56
+Notebook: 03_feature_engineering.ipynb
+
+DATASET SUMMARY:
+Observations: 802
+Features: 25
+Postcode Sectors: 52
+Time Period: 2020-2023
+
+TARGET VARIABLE DISTRIBUTION:
+Declining: 454 (56.6%)
+Growing: 154 (19.2%)
+Booming: 132 (16.5%)
+Stable: 62 (7.7%)
+
+FEATURE GROUPS:
+
+Price Features:
+- median_price
+- mean_price
+- price_std
+- yoy_price_change_pct
+- qoq_price_change_pct
+- price_ma3
+- price_volatility
+- price_percentile
+
+Volume Features:
+- transaction_count
+- yoy_volume_change_pct
+- qoq_volume_change_pct
+- volume_ma3
+- relative_activity
+- activity_level
+
+Derived Features:
+- market_momentum
+- market_health_score
+- trend_consistency
