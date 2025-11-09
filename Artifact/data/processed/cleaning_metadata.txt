@@ -1,0 +1,24 @@
+DATA CLEANING METADATA
+============================================================
+
+Date Cleaned: 2025-11-09 12:33:40
+Cleaning Notebook: 02_data_cleaning.ipynb
+
+ORIGINAL DATA:
+  Rows: 67,232
+  Price Range: £100 - £53,730,000
+  Median Price: £245,000
+
+CLEANING STEPS APPLIED:
+  1. Price outlier removal (£30,000 - £2,000,000)
+  2. Missing value handling (kept non-critical missing)
+  3. Feature creation (postcode_sector, temporal features)
+  4. Postcode sector filtering (minimum 20 transactions)
+
+CLEANED DATA:
+  Rows: 66,406
+  Retention Rate: 98.8%
+  Price Range: £30,000 - £2,000,000
+  Median Price: £245,000
+  Postcode Sectors: 52
+  Avg Transactions/Sector: 1277.0
