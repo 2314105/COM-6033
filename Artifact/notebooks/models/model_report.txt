@@ -1,0 +1,39 @@
+MODEL TRAINING REPORT
+============================================================
+
+Training Date: 2025-11-09 15:36:01
+Notebook: 04_model_training.ipynb
+
+SELECTED MODEL:
+  Type: Random Forest
+  Test Accuracy: 1.000 (100.0%)
+  CV Score: 0.977 (±0.023)
+
+TRAINING DATA:
+  Training samples: 641
+  Test samples: 161
+  Features: 20
+
+CLASS DISTRIBUTION:
+  Booming     : Train=105, Test= 27
+  Declining   : Train=363, Test= 91
+  Growing     : Train=123, Test= 31
+  Stable      : Train= 50, Test= 12
+
+TOP 10 IMPORTANT FEATURES:
+  7. yoy_price_change_pct: 0.3104
+  13. yoy_volume_change_pct: 0.1678
+  18. market_momentum: 0.1556
+  19. market_health_score: 0.1425
+  20. trend_consistency: 0.0425
+  16. relative_activity: 0.0335
+  12. transaction_count: 0.0234
+  15. volume_ma3: 0.0212
+  8. qoq_price_change_pct: 0.0167
+  17. activity_level: 0.0149
+
+MODEL COMPARISON:
+              Model  Test_Accuracy  Train_Accuracy  CV_Mean   CV_Std  Overfit_Gap
+Logistic Regression       0.763975        0.809672 0.759702 0.045878     0.045697
+      Random Forest       1.000000        1.000000 0.976562 0.023176     0.000000
+            XGBoost       1.000000        1.000000 0.995313 0.009375     0.000000
