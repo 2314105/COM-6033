@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Property Price Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>UK Property Price Predictor</h1>
+            <p class="subtitle">AI-powered property valuation using EPC and market data</p>
+            <div class="model-info">
+                <span>Model: {{ model_name }}</span> |
+                <span>Accuracy (R²): {{ model_r2 }}%</span> |
+                <span>Avg Error: ±£{{ model_mae }}</span>
+            </div>
+        </header>
+
+        <main>
+            <form method="POST" action="/predict" class="prediction-form">
+                <h2>Property Details</h2>
+
+                <!-- Property Size & Layout -->
+                <div class="form-section">
+                    <h3>Size & Layout</h3>
+
+                    <div class="form-group">
+                        <label for="floor_area">Floor Area (sqm) *</label>
+                        <input type="number" id="floor_area" name="floor_area"
+                               min="20" max="500" step="1" required
+                               placeholder="e.g., 85">
+                        <small>Between 20 and 500 sqm</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="num_rooms">Number of Bedrooms *</label>
+                        <input type="number" id="num_rooms" name="num_rooms"
+                               min="1" max="15" step="1" required
+                               placeholder="e.g., 3">
+                        <small>Between 1 and 15 rooms</small>
+                    </div>
+                </div>
+
+                <!-- Property Type -->
+                <div class="form-section">
+                    <h3>Property Type</h3>
+
+                    <div class="form-group">
+                        <label for="property_type">Property Category *</label>
+                        <select id="property_type" name="property_type" required>
+                            <option value="">Select...</option>
+                            {% for pt in property_types %}
+                            <option value="{{ pt }}">{{ pt }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="property_subtype">Property Sub-Type *</label>
+                        <select id="property_subtype" name="property_subtype" required>
+                            <option value="">Select...</option>
+                            {% for code, name in property_subtype_map.items() %}
+                            <option value="{{ code }}">{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="construction_age">Construction Period *</label>
+                        <select id="construction_age" name="construction_age" required>
+                            <option value="">Select...</option>
+                            {% for age in construction_ages %}
+                            <option value="{{ age }}">{{ age }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="form-section">
+                    <h3>Location</h3>
+
+                    <div class="form-group">
+                        <label for="county">County *</label>
+                        <select id="county" name="county" required>
+                            <option value="">Select county first...</option>
+                            {% for county in counties %}
+                            <option value="{{ county }}">{{ county }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="district">District *</label>
+                        <select id="district" name="district" required>
+                            <option value="">Select...</option>
+                            {% for district in districts %}
+                            <option value="{{ district }}">{{ district }}</option>
+                            {% endfor %}
+                        </select>
+                        <small>Local authority district</small>
+                    </div>
+                </div>
+
+                <!-- Tenure & Energy -->
+                <div class="form-section">
+                    <h3>Tenure & Energy</h3>
+
+                    <div class="form-group">
+                        <label>Tenure Type *</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="is_freehold" value="yes" required>
+                                Freehold
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="is_freehold" value="no" required>
+                                Leasehold
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="energy_rating">Energy Performance Rating *</label>
+                        <select id="energy_rating" name="energy_rating" required>
+                            <option value="">Select...</option>
+                            {% for rating in energy_ratings %}
+                            <option value="{{ rating }}">{{ rating }}{% if rating == 'A' %} (Best){% elif rating == 'G' %} (Worst){% endif %}</option>
+                            {% endfor %}
+                        </select>
+                        <small>From EPC certificate (A=best, G=worst)</small>
+                    </div>
+                </div>
+
+                <!-- Sale Date -->
+                <div class="form-section">
+                    <h3>Expected Sale Date</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="sale_month">Month *</label>
+                            <select id="sale_month" name="sale_month" required>
+                                {% for m in range(1, 13) %}
+                                <option value="{{ m }}" {% if m == current_month %}selected{% endif %}>
+                                    {{ ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][m-1] }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sale_year">Year *</label>
+                            <select id="sale_year" name="sale_year" required>
+                                {% for y in range(current_year, current_year + 3) %}
+                                <option value="{{ y }}" {% if y == current_year %}selected{% endif %}>{{ y }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-predict">Get Price Prediction</button>
+            </form>
+        </main>
+
+        <footer>
+            <p>Powered by machine learning | Model trained on 5.2M UK property transactions (2018-2024)</p>
+            <p><a href="/about">About this model</a> | <a href="/data-sample">View data sample</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Add any JavaScript for form validation or UX improvements
+        document.querySelector('.prediction-form').addEventListener('submit', function(e) {
+            const submitBtn = e.target.querySelector('.btn-predict');
+            submitBtn.textContent = 'Calculating...';
+            submitBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>

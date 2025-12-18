@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - UK Property Price Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>About This Model</h1>
+            <p class="subtitle"><a href="/">← Back to predictor</a></p>
+        </header>
+
+        <main>
+            <div class="about-section">
+                <h2>Model Information</h2>
+                <table class="info-table">
+                    <tr>
+                        <td><strong>Algorithm:</strong></td>
+                        <td>{{ model_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Training Date:</strong></td>
+                        <td>{{ training_date }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Number of Features:</strong></td>
+                        <td>{{ n_features }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="about-section">
+                <h2>Model Performance</h2>
+                <table class="info-table">
+                    <tr>
+                        <td><strong>R² Score:</strong></td>
+                        <td>{{ model_r2 }}% (explains {{ model_r2 }}% of price variance)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mean Absolute Error (MAE):</strong></td>
+                        <td>£{{ model_mae }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mean Absolute Percentage Error (MAPE):</strong></td>
+                        <td>{{ model_mape }}%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Root Mean Squared Error (RMSE):</strong></td>
+                        <td>£{{ model_rmse }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="about-section">
+                <h2>Data Sources</h2>
+                <p>This model was trained on:</p>
+                <ul>
+                    <li><strong>5.2 million</strong> UK property transactions (2018-2024)</li>
+                    <li><strong>Energy Performance Certificate (EPC)</strong> data from UK government</li>
+                    <li><strong>Land Registry Price Paid</strong> data</li>
+                </ul>
+            </div>
+
+            <div class="about-section">
+                <h2>Key Features Used</h2>
+                <ul>
+                    <li>Property size (floor area, number of rooms)</li>
+                    <li>Property type (house, flat, etc.)</li>
+                    <li>Location (district and county)</li>
+                    <li>Construction age</li>
+                    <li>Tenure (freehold/leasehold)</li>
+                    <li>Energy efficiency rating</li>
+                    <li>Market timing (year and month)</li>
+                </ul>
+            </div>
+
+            <div class="about-section">
+                <h2>How It Works</h2>
+                <ol>
+                    <li><strong>Data Collection:</strong> Historical property sales matched with EPC certificates</li>
+                    <li><strong>Feature Engineering:</strong> Creating meaningful features from raw data</li>
+                    <li><strong>Model Training:</strong> Training machine learning algorithms on 5.2M properties</li>
+                    <li><strong>Validation:</strong> Testing on unseen data to measure accuracy</li>
+                    <li><strong>Prediction:</strong> Using the trained model to estimate prices for new properties</li>
+                </ol>
+            </div>
+
+            <a href="/" class="btn-back">Make a Prediction</a>
+        </main>
+
+        <footer>
+            <p>Powered by machine learning | Model trained on 5.2M UK property transactions (2018-2024)</p>
+            <p><a href="/about">About this model</a> | <a href="/data-sample">View data sample</a></p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Sample - UK Property Price Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .data-table {
+            width: 100%;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .data-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+        .data-table th {
+            background: #667eea;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        .data-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+        .stats-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Training Data Sample</h1>
+            <p class="subtitle"><a href="/">← Back to predictor</a></p>
+        </header>
+
+        <main>
+            <div class="stats-box">
+                <h2>Dataset Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">{{ total_records }}</div>
+                        <div class="stat-label">Total Properties</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ num_features }}</div>
+                        <div class="stat-label">Features</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ date_range }}</div>
+                        <div class="stat-label">Date Range</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ price_range }}</div>
+                        <div class="stat-label">Price Range</div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Sample Data ({{ sample_size }} records)</h2>
+            <p>Random sample from the training dataset used to build the model.</p>
+
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            {% for col in columns %}
+                            <th>{{ col }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in data %}
+                        <tr>
+                            {% for value in row %}
+                            <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <a href="/" class="btn-back">Back to Predictor</a>
+        </main>
+
+        <footer>
+            <p>Powered by machine learning | Model trained on 5.2M UK property transactions (2018-2024)</p>
+            <p><a href="/about">About this model</a> | <a href="/data-sample">View data sample</a></p>
+        </footer>
+    </div>
+</body>
+</html>
